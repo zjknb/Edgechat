@@ -15,6 +15,11 @@ function getStep(name) {
 	return workflow.slice(start, next === -1 ? undefined : next);
 }
 
+test("部署入口保留可随 Fork 继承的排序前缀和手动运行入口", () => {
+	assert.match(workflow, /^name: 00 Deploy Worker$/m);
+	assert.match(workflow, /^  workflow_dispatch:$/m);
+});
+
 test("Cloudflare 生产凭据只注入实际调用 Cloudflare 的步骤", () => {
 	const deployJobStart = workflow.indexOf("  deploy:\n");
 	const stepsStart = workflow.indexOf("    steps:\n", deployJobStart);
@@ -73,12 +78,12 @@ test("生产部署在创建或修改云资源前运行完整测试", () => {
 
 test("Actions 通过仓库变量配置保留天数，并在云资源操作前拒绝非法值", () => {
 	const validation = getStep("Validate message retention");
-	assert.match(validation, /MESSAGE_RETENTION_DAYS: \$\{\{ vars.MESSAGE_RETENTION_DAYS \|\| '7' \}\}/);
+	assert.match(validation, /MESSAGE_RETENTION_DAYS: \$\{\{ vars.MESSAGE_RETENTION_DAYS \|\| '15' \}\}/);
 	assert.match(validation, /\^\[1-9\]\[0-9\]\*\$/);
 	assert.match(validation, /exit 1/);
 	assert.ok(workflow.indexOf("      - name: Validate message retention") < workflow.indexOf("      - name: Ensure Cloudflare resources"));
 	const config = getStep("Generate wrangler config for CI");
-	assert.match(config, /MESSAGE_RETENTION_DAYS: \$\{\{ vars.MESSAGE_RETENTION_DAYS \|\| '7' \}\}/);
+	assert.match(config, /MESSAGE_RETENTION_DAYS: \$\{\{ vars.MESSAGE_RETENTION_DAYS \|\| '15' \}\}/);
 	assert.ok(config.includes('MESSAGE_RETENTION_DAYS = \\"${MESSAGE_RETENTION_DAYS}\\"'));
 });
 
