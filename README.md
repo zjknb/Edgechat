@@ -5,7 +5,7 @@
     <a href="https://trendshift.io/repositories/140939?utm_source=trendshift-badge&amp;utm_medium=badge&amp;utm_campaign=badge-trendshift-140939" target="_blank" rel="noopener noreferrer"><img src="https://trendshift.io/api/badge/trendshift/repositories/140939/daily?language=JavaScript" alt="aozorae%2FEdgechat | Trendshift" width="250" height="55"/></a>
   </p>
 
-  <h3>自己的聊天空间，不必从维护服务器开始。</h3>
+  <h3>遥遥领先的cloudflare聊天系统</h3>
   <p>基于 Cloudflare 的开源自部署团队聊天系统</p>
   <p>实时群聊与私信 · Telegram 双向桥接 · 语音与文件 · 消息与附件服务端加密</p>
 
@@ -230,7 +230,7 @@ Docker 相关说明见 [DOCKER.md](DOCKER.md)。
 
 当前不包含 Room 离线数据库、WorkManager Outbox 或 FCM；应用停止接收消息时，不承诺后台即时通知。
 
-原生 `android/` Kotlin + Jetpack Compose 客户端暂时弃用，不再作为默认发行版。源码、API v1 契约与独立 CI 暂时保留。
+旧版 Jetpack Compose 客户端已退役。服务端继续提供 `/api/v1`。
 
 完整说明见 [Android 客户端文档](https://echat.azora.top/guide/android.html)。
 
@@ -305,7 +305,6 @@ Edgechat/
 │  ├─ migrations/        # 数据库迁移
 │  └─ src/               # API、认证与 Durable Objects
 ├─ capacitor/            # 基于 Web UI 的 Android 客户端
-├─ android/              # 暂时保留的原生 Android 客户端
 ├─ .github/workflows/    # 自动部署与 CI
 ├─ wrangler.toml
 ├─ wrangler.demo.toml
